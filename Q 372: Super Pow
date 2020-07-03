@@ -1,0 +1,32 @@
+import java.math.*;
+
+/*
+    Runtime: 113 ms, faster than 6.92% of Java online submissions for Super Pow.
+    Memory Usage: 58.2 MB, less than 5.08% of Java online submissions for Super Pow
+    
+    Difficulty: 8
+    
+    Time: 30 minutes
+    
+    The trick was to be able to find a data type that can hold such a long integer, and big 
+    integer was the way to gow with their own mod pow method.
+*/
+
+class Solution {
+    public int superPow(int a, int[] b) {
+        //Use string because long is too small to store the number
+        String num = "";
+        //Decrement down the list and adding it to string
+        for(int i = b.length-1; i >= 0; i--){
+            num = b[i] + num;
+        }
+        //Set up big integers, A: base, B: exponent
+        BigInteger A = BigInteger.valueOf(a);
+        BigInteger B = new BigInteger(num);
+        //Mod pow it 
+        return A.modPow(B, BigInteger.valueOf(1337)).intValue();
+    }
+    
+    
+    }
+}
