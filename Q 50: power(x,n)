@@ -1,0 +1,49 @@
+/*
+Runtime: 1 ms, faster than 30.90% of Java online submissions for Pow(x, n).
+Memory Usage: 38.9 MB, less than 5.04% of Java online submissions for Pow(x, n).
+
+Time: 1  hour
+
+Difficulty: 6
+
+It was easy at first but then I had to avoid stack overflow, so I just halving the power thus saving myself from doing one operation per cycle of the recursion. If it was odd, then I would subtract by one which would make it even for a runtime of O(log2(n)). It took sometime for me to figure out that the issue wasn't a rounding issue, it was just a memory issue where my recursive algorithm was not space efficient enough. Also the corner cases for the powers at the integer limit for the bases of one and negative one took some time to figure out.
+*/
+
+class Solution {
+    public double myPow(double x, int n) {
+        //If x is one just return one
+        if(x == 1 ){
+            return 1;
+        //If x is zero just return zero
+        }else if(x == 0){
+            return 0;
+        //If x is -1 find if the exponent is even or odd, if exponent is even, then return 1 if           not return -1
+        }else if(x == -1){
+            return (n%2 == 0) ? 1 : -1;
+        }
+        //If n is greater than the positive integer limit or less than or equal to the minimum 
+        //value, return 0;
+        if(n> Integer.MAX_VALUE || n<= Integer.MIN_VALUE){
+            return 0;
+        }
+        //If n is less than zero then set x to be the reciprocal of itself and turn n to positive
+        if(n < 0){
+            x = 1/x;
+            n *= -1;
+        }
+        //Keeps track of the vale multiplied 
+        double m;
+        //Base case, if exponent is zero return 1
+        if(n == 0){
+            return 1;
+        //If exponent is even, square the elements where the exponenet is even and divide n by 2
+        }else if(n%2==0){
+            m = myPow(x,n/2);
+            return m*m;
+        //If exponent is odd, multiply itself by then next power 
+        }else{
+            return x*myPow(x,n-1);
+        }
+    }
+    
+}
